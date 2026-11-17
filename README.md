@@ -55,6 +55,8 @@ The application is configured for Vercel's Flask/Python support, not a static-si
 
 The app deliberately refuses to start on Vercel if either secret variable is missing. Do not put secret values in `vercel.json`. Requests to `/api/*` and `/photos/*` continue through Flask authentication. The `public/` directory contains only the generic login page, CSS and JavaScript.
 
+Runtime dependencies are declared in `pyproject.toml` as well as `requirements.txt`; keep the two lists synchronized. A `ModuleNotFoundError: No module named 'flask'` in Vercel Logs means the dependency installation was missing, not that the login password is wrong. Deploy the latest dependency-fix commit and disable use of the existing build cache when manually redeploying an older build. Leave the Install Command override disabled so Vercel can install the declared Python dependencies.
+
 Login attempt throttling is **per function instance**, not a shared global limit on Vercel. Configure an additional Vercel Firewall rate-limit rule for `/api/login` if needed. No database or writable runtime filesystem is required; the bundled photos and JSON are read-only.
 
 To roll back, promote a previous successful Vercel deployment. Keep the same environment variables unless you intentionally rotate credentials; rotating SITE_SECRET_KEY invalidates existing sessions.

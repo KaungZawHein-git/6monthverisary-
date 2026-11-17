@@ -1,6 +1,7 @@
 """Authentication, privacy and input-validation regression tests."""
 
 import unittest
+import tomllib
 from pathlib import Path
 from unittest.mock import patch
 
@@ -134,6 +135,14 @@ class PrivacyTests(unittest.TestCase):
         with patch.dict("os.environ", {"VERCEL": "1"}, clear=True):
             with self.assertRaisesRegex(RuntimeError, "SITE_SECRET_KEY"):
                 create_app()
+
+    def test_vercel_dependencies_are_declared_in_pyproject(self) -> None:
+        root = Path(__file__).parent
+        manifest = tomllib.loads((root / "pyproject.toml").read_text())
+        dependencies = manifest["project"]["dependencies"]
+        requirements = [line.strip() for line in (root / "requirements.txt").read_text().splitlines() if line.strip() and not line.startswith("#")]
+        self.assertEqual(sorted(dependencies), sorted(requirements))
+        self.assertIn("Flask==3.1.2", dependencies)
 
     def test_vercel_authentication_and_photos(self) -> None:
         environment = {
