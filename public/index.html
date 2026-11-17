@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#f9e8ef">
+  <title>A little world for you ♡</title>
+  <link rel="stylesheet" href="/login.css">
+  <script src="/login.js" defer></script>
+</head>
+<body>
+  <main id="login-screen" class="lock-screen">
+    <div class="lock-doodles" aria-hidden="true">✧ &nbsp; ♡ &nbsp; ✧</div>
+    <section class="lock-card">
+      <span class="eyebrow">A LITTLE SECRET, JUST FOR YOU</span>
+      <div class="envelope-icon" aria-hidden="true">💌</div>
+      <h1>Some things are<br>only meant for <em>you.</em></h1>
+      <p>A little world of love, laughter, and us.<br>Enter our secret password to step inside.</p>
+      <form id="unlock-form">
+        <label for="password">Our secret password</label>
+        <div class="password-wrap"><input id="password" type="password" autocomplete="current-password" required maxlength="256" placeholder="Our little secret…"><button type="button" id="show-password" aria-label="Show password" aria-pressed="false">Show</button></div>
+        <p id="login-error" class="error" role="alert"></p>
+        <label class="music-opt-in"><input id="login-music" type="checkbox" checked> Start our song after unlocking ♫</label>
+        <button class="unlock-button" id="unlock-button" type="submit">Open our little world <span aria-hidden="true">↗</span></button>
+      </form>
+      <span class="private-note">♡ &nbsp; A private place for two hearts</span>
+    </section>
+    <footer>Made with a whole lot of love.</footer>
+  </main>
+  <div id="app" hidden></div>
+</body>
+</html>

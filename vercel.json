@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app.py": {
+      "includeFiles": "{public,web,private}/**",
+      "excludeFiles": "{instance/**,.venv/**,test_*.py,prepare_photos.py,export_vercel_env.py}"
+    }
+  }
+}
