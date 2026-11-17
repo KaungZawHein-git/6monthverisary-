@@ -34,6 +34,7 @@ export async function mount(csrf, options = {}) {
             <p class="burmese hero-burmese" lang="my">Happy ၆ လပြည့်ပါ baby လေးရေ ♡</p>
             <div class="hero-actions"><a class="button primary" href="#memories">Turn the pages of us <span>↗</span></a><button class="text-button" id="hero-music">♫ &nbsp; Our song</button></div>
             <div class="hero-signature">For Yan, with all my heart. <span>— Jason</span></div>
+            <section class="music-panel" id="music-panel" hidden aria-labelledby="music-heading"><div class="music-panel-head"><span id="music-heading">Our soundtrack ♡</span><button id="close-music" aria-label="Close music player and stop music">×</button></div><div id="youtube-container"></div><p id="music-status" role="status">A little soundtrack to our story.</p><button class="button primary" id="play-pause-music">Play our song ♫</button><a href="${escapeHTML(data.song.url)}" target="_blank" rel="noopener noreferrer">Listen on YouTube ↗</a><button class="text-button" id="stop-music">Continue without music ×</button></section>
           </div>
           <div class="hero-photos"><span class="handwritten photo-note">my favourite person ↘</span><span class="photo-sparkle" aria-hidden="true">✧</span>
             <figure class="polaroid yan"><img src="/photos/yan.jpg" alt="Yan smiling on a bench in front of a colorful window"><figcaption>you, my favourite view ♡</figcaption></figure>
@@ -59,7 +60,6 @@ export async function mount(csrf, options = {}) {
       <footer class="site-footer"><a href="#home" class="footer-names">Jason <span>♡</span> Yan</a><p>Six months down. A lifetime of little moments to go.</p><span>18.05.2026 — ALWAYS</span></footer>
     </div>
     <aside class="music-player" id="music-pill" aria-label="Our song"><button id="music-toggle" aria-label="Play our song" aria-expanded="false">♫</button><button id="show-music" class="music-title"><strong lang="my">${escapeHTML(data.song.title)}</strong><small lang="my">${escapeHTML(data.song.artist)} · Our song</small></button><button id="dismiss-music" class="dismiss-music" aria-label="Stop music and hide music controls">×</button></aside>
-    <section class="music-panel" id="music-panel" hidden aria-labelledby="music-heading"><div class="music-panel-head"><span id="music-heading">Our soundtrack ♡</span><button id="close-music" aria-label="Close music player and stop music">×</button></div><div id="youtube-container"></div><p id="music-status" role="status">A little soundtrack to our story.</p><button class="button primary" id="play-pause-music">Play our song ♫</button><a href="${escapeHTML(data.song.url)}" target="_blank" rel="noopener noreferrer">Listen on YouTube ↗</a><button class="text-button" id="stop-music">Continue without music ×</button></section>
     <dialog id="story-dialog" class="story-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><div id="dialog-content"></div></dialog>
     <div id="celebration-particles" aria-hidden="true"></div>`;
   updateTimer();

@@ -78,7 +78,7 @@
 .music-title strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .music-player>.dismiss-music{width:36px;height:36px;font-size:23px;color:#a98091;background:transparent}
 .music-player.is-playing #music-toggle{background:#b36a87;color:white}
-.music-panel{max-height:calc(100svh - 115px);overflow:auto;bottom:90px;width:min(350px,calc(100vw - 30px));padding:17px}
+.hero-copy .music-panel{position:static;inset:auto;max-height:none;overflow:visible;width:min(350px,100%);box-sizing:border-box;margin:24px 0 0;padding:17px;text-align:left;box-shadow:none}
 .music-panel #youtube-container{min-height:200px;background:#ede4e8;border-radius:7px;overflow:hidden}
 .music-panel iframe{height:200px;aspect-ratio:auto;display:block;border:0}
 .music-panel #music-status{font-size:12px;line-height:1.8;min-height:44px}

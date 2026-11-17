@@ -107,7 +107,21 @@ export function startGame(id, root, quiz, onWin, onNext) {
           context.beginPath(); context.roundRect(gate.x, gate.gap + 78, 44, 450 - gate.gap - 78, 10); context.fill();
           context.fillStyle = '#698f84'; context.font = '17px Georgia'; context.fillText('♡', gate.x + 22, gate.gap - 96); context.fillStyle = '#94b7ad';
         });
-        context.font = '31px "Noto Color Emoji", Arial'; context.fillText('🕊️', 90, birdY + 10);
+        // Draw our own right-facing bird: emoji direction varies by device/font.
+        context.save();
+        context.translate(90, birdY);
+        context.rotate(Math.max(-0.35, Math.min(0.5, velocity / 600)));
+        context.fillStyle = '#b57992';
+        context.beginPath(); context.moveTo(-10, 1); context.lineTo(-19, -5); context.lineTo(-17, 7); context.closePath(); context.fill();
+        context.fillStyle = '#fffaf2'; context.strokeStyle = '#b57992'; context.lineWidth = 1.5;
+        context.beginPath(); context.ellipse(0, 0, 12, 10, 0, 0, Math.PI * 2); context.fill(); context.stroke();
+        context.fillStyle = '#e9b9ca';
+        context.beginPath(); context.ellipse(-3, 2, 7, 4, Math.sin(elapsed * 14) * 0.6, 0, Math.PI * 2); context.fill();
+        context.fillStyle = '#dba25c';
+        context.beginPath(); context.moveTo(10, -3); context.lineTo(18, 0); context.lineTo(11, 3); context.closePath(); context.fill();
+        context.fillStyle = '#493a46';
+        context.beginPath(); context.arc(6, -4, 1.8, 0, Math.PI * 2); context.fill();
+        context.restore();
       }
       if (!running) {
         context.fillStyle = '#6f596b'; context.font = 'italic 22px Georgia'; context.fillText('A tiny adventure for two ♡', 210, 210);

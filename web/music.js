@@ -128,8 +128,12 @@ export function setupMusic(song) {
   }
   play.addEventListener('click', togglePlayback);
   toggle.addEventListener('click', togglePlayback);
-  document.getElementById('show-music').addEventListener('click', () => open(false));
-  document.getElementById('hero-music').addEventListener('click', () => open(true));
+  function showPlayer(autoplay) {
+    open(autoplay);
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  document.getElementById('show-music').addEventListener('click', () => showPlayer(false));
+  document.getElementById('hero-music').addEventListener('click', () => showPlayer(true));
   document.getElementById('close-music').addEventListener('click', () => stop());
   document.getElementById('stop-music').addEventListener('click', () => stop());
   document.getElementById('dismiss-music').addEventListener('click', () => stop({ dismiss: true }));
