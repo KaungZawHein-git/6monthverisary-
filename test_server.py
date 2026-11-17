@@ -39,6 +39,18 @@ class PrivacyTests(unittest.TestCase):
             with self.client.get(path) as response:
                 self.assertEqual(response.status_code, 200)
 
+    def test_music_requires_login_and_supports_seeking(self) -> None:
+        self.assertEqual(self.client.get('/music.mp3').status_code, 302)
+        self.login()
+        with self.client.get('/music.mp3', headers={'Range': 'bytes=0-127'}) as response:
+            self.assertEqual(response.status_code, 206)
+            self.assertEqual(response.mimetype, 'audio/mpeg')
+            self.assertEqual(len(response.data), 128)
+            self.assertIn('media-src \'self\'', response.headers['Content-Security-Policy'])
+        with self.client.get('/music.mp3', method='HEAD') as response:
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.content_length, (Path(__file__).parent / 'public' / 'music.mp3').stat().st_size)
+
     def test_csrf_required(self) -> None:
         self.assertEqual(self.client.post("/api/login", json={"password": "test-password"}).status_code, 403)
 

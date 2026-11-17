@@ -61,12 +61,11 @@ def create_app(test_config: dict | None = None) -> Flask:
         response.headers["Cache-Control"] = "no-store, private"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
-        # YouTube requires an origin Referer for embedded playback (error 153).
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["X-Robots-Tag"] = "noindex, nofollow, noarchive"
         response.headers["Content-Security-Policy"] = (
-            "default-src 'self'; script-src 'self' https://www.youtube.com https://s.ytimg.com; style-src 'self'; "
-            "img-src 'self' data:; frame-src https://www.youtube-nocookie.com; "
+            "default-src 'self'; script-src 'self'; style-src 'self'; "
+            "img-src 'self' data:; media-src 'self'; frame-src 'none'; "
             "connect-src 'self'; object-src 'none'; base-uri 'none'; "
             "form-action 'self'; frame-ancestors 'none'"
         )
@@ -138,6 +137,10 @@ def create_app(test_config: dict | None = None) -> Flask:
     @app.get("/photos/<path:name>")
     def photos(name: str):
         return send_from_directory(ROOT / "private" / "photos", name)
+
+    @app.get("/music.mp3")
+    def music():
+        return send_from_directory(ROOT / "public", "music.mp3", mimetype="audio/mpeg")
 
     @app.get("/api/content")
     def content():

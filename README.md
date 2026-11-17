@@ -1,6 +1,6 @@
 # Jason & Yan — Six Months of Us
 
-A private, bilingual, mobile-first monthaversary gift. Original scrapbook design with 18 real photos across 16 illustrated-paper pages, seven additional written memories, three sequential games, a live relationship clock, a love letter and an optional visible YouTube player.
+A private, bilingual, mobile-first monthaversary gift. Original scrapbook design with 18 real photos across 16 illustrated-paper pages, seven additional written memories, three sequential games, a live relationship clock, a love letter and an optional MP3 soundtrack.
 
 ## Local preview (Linux / WSL)
 
@@ -22,15 +22,15 @@ The photo files are `private/photos/yan.jpg` and `private/photos/jason.jpg`. The
 - `private/content.json`: dates, English headings, Burmese memories, letter, questions and song.
 - `private/scrapbook.json`: the 16 photo stories and their image mappings. The monthly 16th-day tradition is intentionally separate from the relationship start date on 18 May.
 - `web/scrapbook.js` and `web/scrapbook.css`: filterable photo scrapbook, paired swipe galleries, full-screen photo viewing and zoom controls.
-- `web/music.js`: YouTube player controls, autoplay-blocked fallback and stop/close behavior.
+- `web/music.js`: local audio controls, autoplay-blocked fallback and stop/close behavior. `public/music.mp3` is the supplied soundtrack. Vercel serves it directly as a public static asset with seeking support, avoiding serverless response-size limits; the local Flask route requires authentication.
 - `web/style.css`: colors, layout and responsive design.
 - `web/app.js`: pages, timer, music and memory/letter dialogs.
 - `web/games.js`: quiz, heart catcher and flying game.
 - Default date boundary: **Myanmar time (UTC+06:30)**. Change both date offsets in the content file if you prefer another timezone.
 - All seven supplied memories are retained. Burmese spelling, punctuation and phrasing have been edited for readability while keeping the personal “ကိုကို / baby” voice and the original stories. English headings and short romantic lines are added.
 - Game progress is stored locally on each browser, not synced between devices. It is a playful reveal, not a security barrier. The real privacy barrier is server authentication.
-- Fresh login attempts to play the original song if the checked “Start our song” option is left enabled. Some mobile browsers block audible autoplay; the visible player and Play button provide a manual fallback. Restoring an existing session does not start music unexpectedly. Pause pauses; the panel Close × and “Continue without music” stop/destroy playback. The small × also dismisses the floating controls. “Our song” can reopen them. The video stays visible while playing; no hidden background audio extraction is used. Embedding and actual playback depend on YouTube availability. Opening the player loads YouTube’s API, even if the phone blocks playback.
-- No third-party requests before authentication. Uncheck the music option to enter without contacting YouTube. Noto Sans Myanmar and Noto Color Emoji are bundled locally under their SIL Open Font Licenses in `web/fonts/`.
+- Fresh login attempts to play the supplied MP3 if the checked “Start our song” option is left enabled. Some mobile browsers block audible autoplay; tap the compact ♫ control as a fallback. Restoring an existing session does not start music unexpectedly. Music loops while browsing; Pause pauses and Close/Continue without music stops and rewinds. The small × also dismisses the floating controls. Tap the song title to open inline native audio controls. No video panel opens for autoplay. Playback with the screen locked or another app open depends on the browser and operating system.
+- No YouTube API or third-party music requests are made. Only publish audio you have permission to distribute; like the photos, the supplied MP3 is included in the public repository. Noto Sans Myanmar and Noto Color Emoji are bundled locally under their SIL Open Font Licenses in `web/fonts/`.
 
 ## Photo preparation
 
@@ -53,7 +53,7 @@ The application is configured for Vercel's Flask/Python support, not a static-si
 3. On the original development computer, run `.venv/bin/python export_vercel_env.py` to generate `instance/vercel.env`. The file is local, mode 0600 and Git-ignored. Import it using Vercel's environment-variable importer, or copy each value into its named variable without the surrounding quotes. It preserves the existing login password. Do not paste its contents into GitHub or commit them.
 4. Deploy, or redeploy after setting the variables. Vercel enables secure HTTPS-only session cookies automatically. Verify login, a paired photo memory, music controls, and logout on a phone.
 
-The app deliberately refuses to start on Vercel if either secret variable is missing. Do not put secret values in `vercel.json`. Requests to `/api/*` and `/photos/*` continue through Flask authentication. The `public/` directory contains only the generic login page, CSS and JavaScript.
+The app deliberately refuses to start on Vercel if either secret variable is missing. Do not put secret values in `vercel.json`. Requests to `/api/*` and `/photos/*` continue through Flask authentication. The `public/` directory contains the generic login page, CSS, JavaScript and the publicly accessible MP3 soundtrack.
 
 Runtime dependencies are declared in `pyproject.toml` as well as `requirements.txt`; keep the two lists synchronized. A `ModuleNotFoundError: No module named 'flask'` in Vercel Logs means the dependency installation was missing, not that the login password is wrong. Deploy the latest dependency-fix commit and disable use of the existing build cache when manually redeploying an older build. Leave the Install Command override disabled so Vercel can install the declared Python dependencies.
 
