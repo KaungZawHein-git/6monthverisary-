@@ -7,10 +7,19 @@ export function setupMusic(song) {
   const audio = document.getElementById('our-audio');
   audio.setAttribute('aria-label', `${song.title} — ${song.artist}`);
   let generation = 0;
+  function cancelAutoplayRetry() {
+    document.removeEventListener('pointerup', retryAutoplay);
+    document.removeEventListener('keydown', retryAutoplay);
+  }
+  function retryAutoplay(event) {
+    if (!event.isTrusted || event.target.closest?.('button, a, input, audio, [role="button"]')) return;
+    cancelAutoplayRetry();
+    start();
+  }
 
   function state(playing) {
     play.textContent = playing ? 'Pause music Ⅱ' : 'Play our song ♫';
-    toggle.textContent = playing ? 'Ⅱ' : '♫';
+    toggle.textContent = playing ? 'Pause Ⅱ' : 'Play ♫';
     toggle.setAttribute('aria-label', playing ? 'Pause our song' : 'Play our song');
     pill.classList.toggle('is-playing', playing);
   }
@@ -20,6 +29,7 @@ export function setupMusic(song) {
     status.textContent = 'Starting our song…';
     try {
       await audio.play();
+      cancelAutoplayRetry();
     } catch (error) {
       if (attempt !== generation) return;
       state(false);
@@ -27,9 +37,16 @@ export function setupMusic(song) {
         ? 'Tap ♫ below to start our song, baby. Your phone needs a tap first.'
         : 'Could not play our song. Please check your connection and try again.';
       toggle.setAttribute('aria-label', 'Tap to play our song');
+      if (error.name === 'NotAllowedError') {
+        toggle.textContent = 'Play ♫';
+        cancelAutoplayRetry();
+        document.addEventListener('pointerup', retryAutoplay);
+        document.addEventListener('keydown', retryAutoplay);
+      }
     }
   }
   function stop({ dismiss = false } = {}) {
+    cancelAutoplayRetry();
     generation++;
     audio.pause();
     audio.currentTime = 0;
@@ -47,6 +64,7 @@ export function setupMusic(song) {
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
   function togglePlayback() {
+    cancelAutoplayRetry();
     if (audio.paused) start();
     else { generation++; audio.pause(); }
   }

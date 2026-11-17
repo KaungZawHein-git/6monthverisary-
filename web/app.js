@@ -59,7 +59,7 @@ export async function mount(csrf, options = {}) {
       </main>
       <footer class="site-footer"><a href="#home" class="footer-names">Jason <span>♡</span> Yan</a><p>Six months down. A lifetime of little moments to go.</p><span>18.05.2026 — ALWAYS</span></footer>
     </div>
-    <aside class="music-player" id="music-pill" aria-label="Our song"><button id="music-toggle" aria-label="Play our song" aria-expanded="false">♫</button><button id="show-music" class="music-title"><strong lang="my">${escapeHTML(data.song.title)}</strong><small lang="my">${escapeHTML(data.song.artist)} · Our song</small></button><button id="dismiss-music" class="dismiss-music" aria-label="Stop music and hide music controls">×</button></aside>
+    <aside class="music-player" id="music-pill" aria-label="Our song"><button id="music-toggle" aria-label="Play our song">Play ♫</button><button id="show-music" class="music-title" aria-controls="music-panel" aria-expanded="false"><strong lang="my">${escapeHTML(data.song.title)}</strong><small lang="my">${escapeHTML(data.song.artist)} · Our song</small></button><button id="dismiss-music" class="dismiss-music" aria-label="Stop music and hide music controls">×</button></aside>
     <dialog id="story-dialog" class="story-dialog"><button class="dialog-close" aria-label="Close dialog">×</button><div id="dialog-content"></div></dialog>
     <div id="celebration-particles" aria-hidden="true"></div>`;
   updateTimer();

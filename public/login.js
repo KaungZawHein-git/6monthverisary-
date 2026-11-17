@@ -25,7 +25,7 @@ async function requestJSON(path, options) {
   }
   return result;
 }
-async function openWorld(autoplay = false) {
+async function openWorld(autoplay = true) {
   const stylesheet = document.createElement('link');
   stylesheet.rel = 'stylesheet';
   stylesheet.href = '/assets/style.css';
@@ -67,7 +67,7 @@ document.getElementById('unlock-form').addEventListener('submit', async (event) 
     });
     csrf = result.csrf;
     document.getElementById('password').value = '';
-    await openWorld(document.getElementById('login-music').checked);
+    await openWorld();
   } catch (error) {
     document.getElementById('login-error').textContent = error.message || 'Unable to connect. Please try again.';
   } finally { button.disabled = false; }
